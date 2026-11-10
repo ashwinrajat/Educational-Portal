@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration - Win's LearnHub</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 40px 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f2027,
+                    #203a43,
+                    #2c5364
+                );
+
+            color: white;
+        }
+
+        /* Background circles */
+
+        body::before {
+            content: "";
+            position: fixed;
+
+            width: 300px;
+            height: 300px;
+
+            border-radius: 50%;
+
+            background: rgba(0, 198, 255, 0.15);
+
+            top: -100px;
+            left: -100px;
+
+            animation: float 6s infinite alternate;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+
+            width: 350px;
+            height: 350px;
+
+            border-radius: 50%;
+
+            background: rgba(0, 114, 255, 0.15);
+
+            bottom: -150px;
+            right: -100px;
+
+            animation: float 7s infinite alternate-reverse;
+        }
+
+        @keyframes float {
+
+            from {
+                transform: translateY(0px);
+            }
+
+            to {
+                transform: translateY(40px);
+            }
+        }
+
+        /* Main container */
+
+        .register-container {
+
+            width: 100%;
+            max-width: 500px;
+
+            padding: 35px;
+
+            background:
+                rgba(255, 255, 255, 0.10);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.20);
+
+            border-radius: 25px;
+
+            backdrop-filter: blur(15px);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0, 0, 0, 0.40);
+
+            position: relative;
+
+            z-index: 2;
+
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+
+        .logo {
+            text-align: center;
+            font-size: 50px;
+            margin-bottom: 5px;
+
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #c9dce2;
+            margin-bottom: 30px;
+        }
+
+        /* Form */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+        .required {
+            color: #ff6b6b;
+        }
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: none;
+
+            outline: none;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            color: #222;
+
+            transition: 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 0 15px
+                rgba(0, 229, 255, 0.7);
+        }
+
+        input::placeholder {
+            color: #777;
+        }
+
+        /* Password hint */
+
+        .hint {
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 12px;
+
+            color: #bdd0d6;
+        }
+
+        /* Button */
+
+        .register-btn {
+
+            width: 100%;
+
+            padding: 15px;
+
+            margin-top: 10px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00c6ff,
+                    #0072ff
+                );
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .register-btn:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(0, 198, 255, 0.45);
+        }
+
+        .register-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Login link */
+
+        .login-link {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #d4e2e6;
+        }
+
+        .login-link a {
+
+            color: #00e5ff;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            margin-left: 5px;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Home link */
+
+        .home-link {
+
+            text-align: center;
+
+            margin-top: 15px;
+        }
+
+        .home-link a {
+
+            color: #c9dce2;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+        .home-link a:hover {
+            color: #00e5ff;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 20px 15px;
+            }
+
+            .register-container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="register-container">
+
+        <!-- Logo -->
+
+        <div class="logo">
+            🎓
+        </div>
+
+        <h1>
+            Student Registration
+        </h1>
+
+        <p class="subtitle">
+            Create your Win's LearnHub student account
+        </p>
+
+
+        <!--
+            VERY IMPORTANT
+
+            This form sends data to:
+
+            RegisterStudentServlet
+
+            using POST method.
+        -->
+
+        <form action="RegisterStudentServlet"
+              method="post">
+
+
+            <!-- Name -->
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required>
+
+            </div>
+
+
+            <!-- Email -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create your password"
+                    minlength="6"
+                    required>
+
+                <span class="hint">
+                    Password must contain at least 6 characters.
+                </span>
+
+            </div>
+
+
+            <!-- Phone -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    pattern="[0-9]{10}"
+                    maxlength="10">
+
+                <span class="hint">
+                    Enter a 10-digit mobile number.
+                </span>
+
+            </div>
+
+
+            <!-- Course -->
+
+            <div class="form-group">
+
+                <label for="course">
+                    Course
+                    <span class="required">*</span>
+                </label>
+
+                <select
+                    id="course"
+                    name="course"
+                    required>
+
+                    <option value="">
+                        Select your course
+                    </option>
+
+                    <option value="Computer Science">
+                        Computer Science
+                    </option>
+
+                    <option value="Information Technology">
+                        Information Technology
+                    </option>
+
+                    <option value="Electronics">
+                        Electronics
+                    </option>
+
+                    <option value="Mechanical">
+                        Mechanical
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Submit -->
+
+            <button
+                type="submit"
+                class="register-btn">
+
+                🚀 Register Now
+
+            </button>
+
+        </form>
+
+
+        <!-- Login -->
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="login.jsp">
+                Login Here
+            </a>
+
+        </div>
+
+
+        <!-- Home -->
+
+        <div class="home-link">
+
+            <a href="index.html">
+                ← Back to Home
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
